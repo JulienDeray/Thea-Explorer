@@ -1,27 +1,40 @@
-function showHide( id ) {
-    var elem = $('#tr-' + id);
-    var depth = elem.children().eq(0).children().eq(0).attr('style').substring(13, 14);
+function openClose( id ) {
+    var folderAtt = $('#' + id).attr('folder');
+    if ( typeof folderAtt !== 'undefined' ) {
+        if ( folderAtt === 'closed' )
+            open( id );
+        else
+            close( id );
+    }
+}
 
-    if (depth > 0)
-        depth = elem.children().eq(0).children().eq(0).attr('style').substring(13, 15);
-
-    depth = parseInt( depth );
+function close( id ) {
+    var elem = $('#' + id);
+    elem.attr('folder', 'closed');
 
     elem.nextAll().each( function() {
-        var researchedDepth = depth + 17;
+        if ( $(this).attr('parent') === id ) { // if element is a child of $elem
+            var folderAtt = $(this).attr('folder');
 
-        if ( $(this).children().eq(0).children().eq(0).attr('style').substring(13, 15) == researchedDepth ) {
-            var hidden = $(this).attr('hidden');
+            if ( typeof folderAtt !== 'undefined' ) { // if it's a folder
+                close( $(this).attr('id') );
+        }
 
-            if (typeof hidden === 'undefined') {
-                $(this).hide();
-                $(this).attr('hidden', true);
-            }
-            else {
-                $(this).show();
-                $(this).attr('hidden', false);
-            }
+        $(this).hide();
+        $(this).attr('hidden', true);
+    }
+});
+}
+
+function open( id ) {
+    var elem = $('#' + id);
+    elem.attr('folder', 'opened');
+
+    elem.nextAll().each( function() {
+        if ( $(this).attr('parent') === id ) { // if element is a child of $elem
+
+            $(this).show();
+            $(this).attr('hidden', false);
         }
     });
-
 }
