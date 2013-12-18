@@ -1,12 +1,12 @@
-@(entity: model.ServerEntity)
+@(entity: model.ServerEntity)(depth: Int)
 
 <tr>
     <td id="@entity.hashCode()">
-        <div style="margin-left: 0px;"><i class="glyphicon @entity.icon"></i> @entity.name</div>
+        <div style="margin-left: @{depth * 17}px;"><i class="glyphicon @entity.icon"></i> @entity.name</div>
     </td>
     <td>@entity.size</td>
 </tr>
 
 @for( file <- entity.content ) {
-    @views.html.line( file )
+    @views.html.line( file )( depth + 1 )
 }
