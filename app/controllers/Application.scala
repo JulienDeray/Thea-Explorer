@@ -3,6 +3,7 @@ package controllers
 import play.api.mvc._
 import model._
 import com.typesafe.config.ConfigFactory
+import java.io.File
 
 object Application extends Controller {
 
@@ -20,8 +21,22 @@ object Application extends Controller {
     new ServerFile("Fil5", 30)
   )
 
+  def systemFileBuilder(root: String): ServerFolder = {
+    val path = new File(root)
+    var content = List[ServerEntity]()
+
+    for ( file <- path.listFiles() ) {
+      if ( file.isDirectory )
+        content = systemFileBuilder(file.getAbsolutePath) :: content
+      else
+        content = new ServerFile(file.getName, file.getTotalSpace) :: content
+    }
+
+    new ServerFolder(path.getName, content)
+  }
+
   def index = Action {
-    Ok( views.html.index( testValues ) )
+    Ok( views.html.index( systemFileBuilder(root) ) )
   }
 
 }

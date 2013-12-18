@@ -1,4 +1,4 @@
-@(files: List[model.ServerEntity])
+@(files: model.ServerFolder)
 
 @main("Thea Explorer") {
 
@@ -13,7 +13,7 @@
                     </tr>
                 </thead>
 
-                @for(file <- files) {
+                @for(file <- files.content) {
                     @views.html.line( file )( 0 )( 0 )
                 }
 
