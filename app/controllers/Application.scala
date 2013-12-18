@@ -2,8 +2,11 @@ package controllers
 
 import play.api.mvc._
 import model._
+import com.typesafe.config.ConfigFactory
 
 object Application extends Controller {
+
+  val root = ConfigFactory.load("customParameters.properties").getString("root-folder")
 
   val testValues: List[ServerEntity] = List(
     new ServerFolder("Dir1", List(
