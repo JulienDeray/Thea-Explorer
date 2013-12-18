@@ -15,12 +15,7 @@
                 </thead>
 
                 @for(file <- files) {
-                    <tr>
-                        <td id="@file.hashCode()">
-                            <div style="margin-left: 0px;"><i class="glyphicon @file.icon"></i> @file.name</div>
-                        </td>
-                        <td>@file.size</td>
-                    </tr>
+                    @views.html.line( file )
                 }
 
             </table>
@@ -30,7 +25,7 @@
             <p>&copy; cRiMi</p>
         </footer>
 
-    </div> <!-- /container -->
+    </div>
 
 
 }

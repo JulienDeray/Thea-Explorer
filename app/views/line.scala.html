@@ -1,0 +1,12 @@
+@(entity: model.ServerEntity)
+
+<tr>
+    <td id="@entity.hashCode()">
+        <div style="margin-left: 0px;"><i class="glyphicon @entity.icon"></i> @entity.name</div>
+    </td>
+    <td>@entity.size</td>
+</tr>
+
+@for( file <- entity.content ) {
+    @views.html.line( file )
+}
