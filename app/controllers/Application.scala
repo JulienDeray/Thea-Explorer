@@ -29,7 +29,7 @@ object Application extends Controller {
       if ( file.isDirectory )
         content = systemFileBuilder(file.getAbsolutePath) :: content
       else
-        content = new ServerFile(file.getName, file.getTotalSpace) :: content
+        content = new ServerFile(file.getName, file.length()) :: content
     }
 
     new ServerFolder(path.getName, content)
