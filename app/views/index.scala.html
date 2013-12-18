@@ -1,0 +1,36 @@
+@(files: List[model.ServerEntity])
+
+@main("Welcome in the Thea Explorer") {
+
+    <div class="container maincontainer">
+
+            <!-- Main hero unit for a primary marketing message or call to action -->
+        <div class="well">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="file-name">Name</th>
+                        <th class="file-size">Size</th>
+                    </tr>
+                </thead>
+
+                @for(file <- files) {
+                    <tr>
+                        <td id="@file.hashCode()">
+                            <div style="margin-left: 0px;"><i class="glyphicon @file.icon"></i> @file.name</div>
+                        </td>
+                        <td>@file.size</td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+        <footer>
+            <p>&copy; cRiMi</p>
+        </footer>
+
+    </div> <!-- /container -->
+
+
+}
