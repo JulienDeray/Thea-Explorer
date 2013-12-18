@@ -1,8 +1,12 @@
 @(entity: model.ServerEntity)(depth: Int)
 
-<tr>
-    <td id="@entity.hashCode()">
-        <div style="margin-left: @{depth * 17}px;"><i class="glyphicon @entity.icon"></i> @entity.name</div>
+<tr id="tr-@entity.hashCode()" @if( depth != 0 ) {hidden} >
+    <td>
+        <div style="margin-left: @{depth * 17}px;">
+            <a @if( entity.isInstanceOf[model.ServerFolder] ) {onclick=showHide(@entity.hashCode())}>
+                <i class="glyphicon @entity.icon"></i> @entity.name
+            </a>
+        </div>
     </td>
     <td>@entity.size</td>
 </tr>
