@@ -3,7 +3,7 @@ package core
 import model.{ServerFile, ServerEntity, ServerFolder}
 import java.io.File
 
-object tools {
+object Tools {
 
   def systemFileBuilder(root: String): ServerFolder = {
     val path = new File(root)
