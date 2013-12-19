@@ -2,11 +2,15 @@
     padding-top: 4%;
 }
 
-.file-name {
+th.file-name {
     width: 80%;
 }
 
-.file-size {
-    width: 20%;
+th.file-size {
+    width: 5%;
+    text-align: center;
 }
 
+td.file-size {
+    text-align: right;
+}

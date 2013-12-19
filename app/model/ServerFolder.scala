@@ -1,6 +1,6 @@
 package model
 
-class ServerFolder(val name: String, val content: List[ServerEntity]) extends ServerEntity {
+class ServerFolder(val name: String, val content: List[ServerEntity], val path: String) extends ServerEntity {
 
   val icon: String = "glyphicon-folder-close"
   val size: Long = sizeOf(content)

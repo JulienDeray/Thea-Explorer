@@ -6,12 +6,14 @@
 >
     <td>
         <div style="margin-left: @{depth * 17}px;">
-            <a @if( entity.isInstanceOf[model.ServerFolder] ) {onclick=openClose('tr-@entity.hashCode()')}>
+            <a @if( entity.isInstanceOf[model.ServerFolder] ) {onclick=openClose('tr-@entity.hashCode()')}
+               href="@entity.path">
                 <i class="glyphicon @entity.icon"></i> @entity.name
             </a>
         </div>
     </td>
-    <td>@entity.formatedSize</td>
+    <td class="file-size">@entity.formatedSize._1</td>
+    <td>@entity.formatedSize._2</td>
 </tr>
 
 @for( file <- entity.content ) {
