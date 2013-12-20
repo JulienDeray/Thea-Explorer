@@ -17,9 +17,11 @@ function openSSEConnection() {
     pushSource.onmessage = function ( event ) {
         var data = JSON.parse( event.data )
         console.log( "Update id: " + data.id + " => " + data.command)
-        if (data.command == "ok") {
-            changeStat(data.id, "passed")
-            notification(true, data.serverName)
+
+        if (data.command == "refreshProgressBar") {
+            $('#splashProgressBar').attr('aria-valuenow', data.pourcentage);
+            $('#splashProgressBar').attr('style', "width: " + data.pourcentage + "%");
+            $('#pourcentage').html(data.pourcentage)
         }
     }
 }

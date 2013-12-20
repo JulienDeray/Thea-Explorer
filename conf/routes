@@ -3,14 +3,15 @@
 # ~~~~
 
 # Home page
-GET         /                        controllers.Application.index
+GET         /                        controllers.Application.splash
+GET         /dashboard               controllers.Application.index
 GET         /download/:path          controllers.Application.download(path: String)
 
 POST        /setConf                 controllers.Application.setConf()
 
 # JS
 GET         /js/interpretedJS        controllers.Application.interpretedJS()
-GET         /js/webSocketJs        controllers.Application.webSocketJS()
+GET         /js/webSocketJs          controllers.Application.webSocketJS()
 
 # WebSocket
 GET         /sse                     controllers.Pusher.sse()

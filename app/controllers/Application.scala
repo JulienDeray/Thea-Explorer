@@ -6,6 +6,8 @@ import java.io.File
 import play.api.data.Form
 import play.api.data.Forms._
 import core.ConfigManager
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
@@ -15,8 +17,19 @@ object Application extends Controller {
     "rootPath" -> nonEmptyText
   )
 
-  def index = Action {
-    Ok( views.html.index( Tools.startBuildFileSystem( config("root-folder") ) ) )
+  val launchInitForm = Form(
+    "status" -> nonEmptyText
+  )
+
+  def index = Action.async {
+    val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( config("root-folder") ) }
+    futurFileSystem.map(
+      fileSystem => Ok( views.html.index( fileSystem ) )
+    )
+  }
+
+  def splash = Action {
+    Ok( views.html.splash() )
   }
 
   def download(path: String) = Action {
@@ -28,6 +41,16 @@ object Application extends Controller {
       formWithErrors => BadRequest( "You have to post a 'root' value" ),
       { root =>
         config.saveProperties( config.addProperty("root-folder", root) )
+        Ok
+      }
+    )
+  }
+
+  def launchInit() = Action { implicit request =>
+    launchInitForm.bindFromRequest().fold(
+      formWithErrors => BadRequest( "Serious issue !" ),
+      { status =>
+
         Ok
       }
     )
