@@ -16,11 +16,11 @@ object Application extends Controller {
   )
 
   def index = Action {
-    Ok( views.html.index( Tools.systemFileBuilder(config("root-folder") ) ) )
+    Ok( views.html.index( Tools.startBuildFileSystem( config("root-folder") ) ) )
   }
 
   def download(path: String) = Action {
-    Ok.sendFile( new File(config("root-folder") + "/" + Tools.unFormatFileUrl( path ) ) )
+    Ok.sendFile( new File( config("root-folder") + "/" + Tools.unFormatFileUrl( path ) ) )
   }
 
   def setConf() = Action { implicit request =>
@@ -35,6 +35,10 @@ object Application extends Controller {
 
   def interpretedJS() = Action { implicit request =>
     Ok( views.html.interpretedJS() )
+  }
+
+  def webSocketJS() = Action { implicit request =>
+    Ok( views.html.webSocket() )
   }
 
 }

@@ -1,5 +1,7 @@
 
 $(document).ready(function () {
+    setTimeout( openSSEConnection, 400 )
+
     $('#saveConf').click(function (e) {
         $('#confModal').modal('hide');
         $.post('@routes.Application.setConf()', { rootPath: $('#rootPath').val() });

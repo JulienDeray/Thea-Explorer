@@ -1,0 +1,25 @@
+
+function openSSEConnection() {
+    var pushSource = new WebSocket( 'ws://localhost:9000/sse' )
+
+    pushSource.onopen = function(e) {
+        console.log("[INFO] SSE channel opened !")
+    }
+
+    pushSource.onerror = function(e) {
+        if (pushSource.readyState == EventSource.CLOSED) {
+            console.log("[INFO] SSE channel closed !")
+        } else {
+            console.log("[ERROR] SSE channel error : %s", e)
+        }
+    }
+
+    pushSource.onmessage = function ( event ) {
+        var data = JSON.parse( event.data )
+        console.log( "Update id: " + data.id + " => " + data.command)
+        if (data.command == "ok") {
+            changeStat(data.id, "passed")
+            notification(true, data.serverName)
+        }
+    }
+}
