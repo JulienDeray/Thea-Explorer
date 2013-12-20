@@ -1,0 +1,8 @@
+
+$(document).ready(function () {
+    $('#saveConf').click(function (e) {
+        $('#confModal').modal('hide');
+        $.post('@routes.Application.setConf()', { rootPath: $('#rootPath').val() });
+        setTimeout("location.reload(true);", 1000);
+    })
+});

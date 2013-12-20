@@ -3,8 +3,13 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.index
-GET        /download/:path      controllers.Application.download(path: String)
+GET         /                      controllers.Application.index
+GET         /download/:path        controllers.Application.download(path: String)
+
+POST        /setConf               controllers.Application.setConf()
+
+# JS
+GET         /js/interpretedJS      controllers.Application.interpretedJS()
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file          controllers.Assets.at(path="/public", file)
