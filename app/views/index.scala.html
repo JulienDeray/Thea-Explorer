@@ -4,20 +4,22 @@
 
     <div class="container maincontainer">
 
-        <div class="well">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="file-name">Name</th>
-                        <th class="file-size" colspan="2">Size</th>
-                    </tr>
-                </thead>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="file-name">Name</th>
+                            <th class="file-size" colspan="2">Size</th>
+                        </tr>
+                    </thead>
 
-                @for(file <- files.content) {
-                    @views.html.line( file )( 0 )( 0 )
-                }
+                    @for(file <- files.content) {
+                        @views.html.line( file )( 0 )( 0 )
+                    }
 
-            </table>
+                </table>
+            </div>
         </div>
 
         <footer>
