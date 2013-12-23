@@ -10,7 +10,15 @@
                     <div class="form-group">
                         <label for="rootPath" class="col-sm-3 control-label">Root path :</label>
                         <div class="col-sm-9">
-                            <input name="rootPath" id="rootPath" class="form-control" value="@Application.config("root-folder")" type="text" placeholder="/directory/you/want/to/see" required/>
+                            <input name="rootPath"
+                            id="rootPath"
+                            class="form-control"
+                            value="@Application.config("root-folder")"
+                            type="text"
+                            data-toggle="tooltip" data-placement="top" data-trigger="manual" title="Please respect the Unix path pattern"
+                            placeholder="/directory/you/want/to/see"
+                            pattern="^(?:/[^/\n]+)*?$"
+                            required/>
                         </div>
                     </div>
                 </form>

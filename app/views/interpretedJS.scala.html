@@ -3,8 +3,18 @@ $(document).ready(function () {
     setTimeout( openSSEConnection, 400 )
 
     $('#saveConf').click(function (e) {
-        $('#confModal').modal('hide');
-        $.post('@routes.Application.setConf()', { rootPath: $('#rootPath').val() });
-        setTimeout("location.href='/';", 1000);
+        var path = $('#rootPath').val();
+        var regex = new RegExp( $('#rootPath').attr('pattern') );
+
+        if( regex.test(path) ) {
+            $('#confModal').modal('hide');
+            $.post('@routes.Application.setConf()', { rootPath: $('#rootPath').val() });
+            setTimeout("location.href='/';", 1000);
+        }
+        else {
+            $('#rootPath').tooltip('show');
+            setTimeout("$('#rootPath').tooltip('hide')", 2000);
+        }
+
     })
 });
