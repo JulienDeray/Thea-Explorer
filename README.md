@@ -2,7 +2,7 @@ Thea Explorer
 =============
 
 This Play! application has been created to easily display files contained on a server (web interface). Only tested on Unix systems for the moment.
-
+Play 2.2.1 is used.
 
 Known issues
 ------------

@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    setTimeout( openSSEConnection, 400 )
+    setTimeout( openSSEConnection, 400 );
 
     $('#saveConf').click(function (e) {
         var path = $('#rootPath').val();
@@ -15,6 +15,7 @@ $(document).ready(function () {
             $('#rootPath').tooltip('show');
             setTimeout("$('#rootPath').tooltip('hide')", 2000);
         }
+    });
 
-    })
 });
+
