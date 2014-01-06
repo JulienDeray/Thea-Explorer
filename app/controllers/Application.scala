@@ -62,9 +62,10 @@ object Application extends Controller {
 
       zip.close()
     }
+    val contentDisposition = "attachment; filename=" + path + ".zip"
     Ok.stream(enumerator >>> Enumerator.eof).withHeaders(
       "Content-Type" -> "application/zip",
-      "Content-Disposition" -> "attachment; filename=test.zip"
+      "Content-Disposition" -> contentDisposition
     )
   }
 
