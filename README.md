@@ -10,13 +10,9 @@ Configuration
 
 The configuration is managed in a file located in `conf/customParameters.properties`. The parameters are :
 
-- `root-folder=/your/root/folder`
+- `root-folder=/your/root/folder` : The folder which will be displayed in the dashboard. It can be changed using the application.
 
-The folder which will be displayed in the dashboard. It can be changed using the application.
-
-- `user=root` and `password=root`
-
-Manage the authentification parameters.
+- `user=root` and `password=root` : Manage the authentification parameters.
 
 
 Known issues
