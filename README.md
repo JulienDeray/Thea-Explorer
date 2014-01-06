@@ -4,6 +4,21 @@ Thea Explorer
 This Play! application has been created to easily display files contained on a server (web interface). Only tested on Unix systems for the moment.
 Play 2.2.1 is used.
 
+
+Configuration
+=============
+
+The configuration is managed in a file located in `conf/customParameters.properties`. The parameters are :
+
+- `root-folder=/your/root/folder`
+
+The folder which will be displayed in the dashboard. It can be changed using the application.
+
+- `user=root` and `password=root`
+
+Manage the authentification parameters.
+
+
 Known issues
 ------------
 

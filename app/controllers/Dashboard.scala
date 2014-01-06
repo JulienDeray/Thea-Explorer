@@ -27,7 +27,7 @@ object Dashboard extends Controller with Secured {
   }
 
   def splash = IsAuthenticated { user => _ =>
-      Ok( views.html.splash() )
+    Ok( views.html.splash() )
   }
 
   def download(path: String) = Action {
