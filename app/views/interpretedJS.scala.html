@@ -8,8 +8,8 @@ $(document).ready(function () {
 
         if( regex.test(path) ) {
             $('#confModal').modal('hide');
-            $.post('@routes.Application.setConf()', { rootPath: $('#rootPath').val() });
-            setTimeout("location.href='/';", 1000);
+            $.post('@routes.Dashboard.setConf()', { rootPath: $('#rootPath').val() });
+            setTimeout("location.href='/splash';", 1000);
         }
         else {
             $('#rootPath').tooltip('show');

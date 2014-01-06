@@ -35,13 +35,12 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#" data-toggle="modal" data-target="#confModal">Configuration</a></li>
+                        <li><a href="@{routes.Application.logout}">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         @content
 
-        <!-- Modals -->
-        @views.html.modalConf()
     </body>
 </html>
