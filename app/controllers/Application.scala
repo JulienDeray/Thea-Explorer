@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 import core.Tools
-import java.io.File
+import java.io.{FileInputStream, File}
 import play.api.data.Form
 import play.api.data.Forms._
 import core.ConfigManager
@@ -36,6 +36,38 @@ object Application extends Controller {
     Ok.sendFile( new File( config("root-folder") + "/" + Tools.unFormatFileUrl( path ) ) )
   }
 
+  def downloadZip(path: String) = Action {
+    import play.api.libs.iteratee._
+    import java.util.zip._
+
+    val enumerator = Enumerator.outputStream { os =>
+      val rootPath = config("root-folder") + "/"
+      val zip = new ZipOutputStream( os )
+      val filelist = Tools.listFiles( rootPath + path )
+      val b = Array.fill[Byte](1024)(0)
+
+      for ( filePath <- filelist ) {
+        var count: Int = 1
+        val in = new FileInputStream( rootPath + Tools.unFormatFileUrl( filePath ) )
+
+        zip.putNextEntry( new ZipEntry( Tools.unFormatFileUrl( filePath ) ) )
+
+        while ( count > 0 ) {
+          zip.write(b, 0, count)
+          count = in.read(b)
+        }
+
+        zip.closeEntry()
+      }
+
+      zip.close()
+    }
+    Ok.stream(enumerator >>> Enumerator.eof).withHeaders(
+      "Content-Type" -> "application/zip",
+      "Content-Disposition" -> "attachment; filename=test.zip"
+    )
+  }
+
   def setConf() = Action { implicit request =>
     confForm.bindFromRequest().fold(
       formWithErrors => BadRequest( "You have to post a 'root' value" ),
@@ -50,7 +82,6 @@ object Application extends Controller {
     launchInitForm.bindFromRequest().fold(
       formWithErrors => BadRequest( "Serious issue !" ),
       { status =>
-
         Ok
       }
     )

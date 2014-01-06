@@ -6,6 +6,7 @@
 GET         /                        controllers.Application.splash
 GET         /dashboard               controllers.Application.index
 GET         /download/:path          controllers.Application.download(path: String)
+GET         /downloadZip/:path       controllers.Application.downloadZip(path: String)
 
 POST        /setConf                 controllers.Application.setConf()
 

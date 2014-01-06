@@ -3,7 +3,7 @@
 }
 
 th.file-name {
-    width: 80%;
+    width: 40%;
 }
 
 th.file-size {
@@ -13,4 +13,8 @@ th.file-size {
 
 td.file-size {
     text-align: right;
+}
+
+th.file-tools {
+    width: 55%;
 }

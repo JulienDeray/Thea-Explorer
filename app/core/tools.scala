@@ -1,10 +1,22 @@
 package core
 
 import model.{ServerFile, ServerEntity, ServerFolder}
-import java.io.File
+import java.io.{FileOutputStream, File}
 import controllers.Pusher
+import java.util.zip.{ZipEntry, ZipOutputStream}
+import play.api.data
 
 object Tools {
+
+  def listFiles(path: String): List[String] = {
+    var list: List[String] = Nil
+    for ( f <- buildFileSystem( path ).content )
+      list = f match {
+        case f: ServerFile => f.path :: list
+        case f: ServerFolder => list ++ listFiles( f.path )
+      }
+    list
+  }
 
   def refreshCounter(i: Double, total: Double) {
     Pusher.pushProgressBar( ((i*100) / total).toInt + "%")
@@ -27,7 +39,7 @@ object Tools {
 
     new ServerFolder(path.getName, content.reverse, root.substring(controllers.Application.config("root-folder").size))
   }
-  
+
   def buildFileSystem(root: String): ServerFolder = {
     val path = new File(root)
     var content = List[ServerEntity]()
