@@ -33,12 +33,7 @@ object Application extends Controller {
         Ok( views.html.login() )
       },
       user => {
-        //if ( user._1 == config("user") && user._2 == config("password") )
-         // Redirect( "/splash" ).withSession( "user" -> user._1 )
-        //else {
-          //Ok( views.html.login() )
-        //}
-        if (UserRepository.getUser(user._1,user._2)!=null)
+        if ( UserRepository.getUser( user._1, user._2 ) != null )
           Redirect( "/splash" ).withSession( "user" -> user._1 )
         else {
           Ok( views.html.login() )
