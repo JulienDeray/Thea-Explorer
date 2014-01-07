@@ -44,6 +44,10 @@ object Dashboard extends Controller with Secured {
       val filelist = Tools.listFiles( rootPath + path )
       val b = Array.fill[Byte](1024)(0)
 
+    /*
+    \\ pour Windows
+    télécharger un sous dossier (exemple sur le --- pour les fichiers)
+     */
       for ( filePath <- filelist ) {
         var count: Int = 1
         val in = new FileInputStream( rootPath + Tools.unFormatFileUrl( filePath ) )

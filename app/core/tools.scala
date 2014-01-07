@@ -10,11 +10,13 @@ object Tools {
 
   def listFiles(path: String): List[String] = {
     var list: List[String] = Nil
-    for ( f <- buildFileSystem( path ).content )
+    for ( f <- buildFileSystem( path ).content ) {
+      println(f.path)
       list = f match {
         case f: ServerFile => f.path :: list
-        case f: ServerFolder => list ++ listFiles( f.path )
+        case f: ServerFolder => list ++ listFiles( controllers.Application.config("root-folder") + f.path )
       }
+    }
     list
   }
 
