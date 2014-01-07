@@ -66,7 +66,7 @@ object Dashboard extends Controller with Secured {
       zip.close()
     }
 
-    val contentDisposition = "attachment; filename=" +  formatedPath.substring(formatedPath.lastIndexOf("/") + 1print) + ".zip"
+    val contentDisposition = "attachment; filename=" +  formatedPath.substring(formatedPath.lastIndexOf("/") + 1) + ".zip"
     Ok.chunked(enumerator >>> Enumerator.eof).withHeaders(
       "Content-Type" -> "application/zip",
       "Content-Disposition" -> contentDisposition
