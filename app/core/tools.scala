@@ -2,7 +2,7 @@ package core
 
 import model.{ServerFile, ServerEntity, ServerFolder}
 import java.io.{FileOutputStream, File}
-import controllers.Pusher
+import controllers.{Dashboard, Pusher}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import play.api.data
 
@@ -11,10 +11,9 @@ object Tools {
   def listFiles(path: String): List[String] = {
     var list: List[String] = Nil
     for ( f <- buildFileSystem( path ).content ) {
-      println(f.path)
       list = f match {
         case f: ServerFile => f.path :: list
-        case f: ServerFolder => list ++ listFiles( controllers.Application.config("root-folder") + f.path )
+        case f: ServerFolder => list ++ listFiles( Dashboard.rootFolder + f.path )
       }
     }
     list
@@ -39,7 +38,7 @@ object Tools {
       refreshCounter(i, contentSize)
     }
 
-    new ServerFolder(path.getName, content.reverse, root.substring(controllers.Application.config("root-folder").size))
+    new ServerFolder( path.getName, content.reverse, root )
   }
 
   def buildFileSystem(root: String): ServerFolder = {
@@ -53,9 +52,12 @@ object Tools {
         content = new ServerFile(file.getName, file.length(), formatFileUrl( file.getAbsolutePath ) ) :: content
     }
 
-    new ServerFolder(path.getName, content.reverse, root.substring(controllers.Application.config("root-folder").size))
+    new ServerFolder( path.getName, content.reverse, formatFolderUrl( root.substring(Dashboard.rootFolder.size) ) )
   }
 
-  def formatFileUrl(path: String): String = path.substring(controllers.Application.config("root-folder").size + 1).replaceAll("/", "---")
+  def formatFileUrl(path: String): String = path.substring(Dashboard.rootFolder.size + 1).replaceAll("/", "---")
   def unFormatFileUrl(path: String): String = path.replaceAll("---", "/").replaceAll("%20", "\\ ")
+
+  def formatFolderUrl(path: String): String = "/" + path.substring(1).replaceAll("/", "---")
+  def unFormatFolderUrl(path: String): String = "/" + path.replaceAll("---", "/")
 }

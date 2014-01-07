@@ -11,6 +11,8 @@ import ExecutionContext.Implicits.global
 
 object Dashboard extends Controller with Secured {
 
+  val rootFolder = Application.config("root-folder")
+
   val confForm = Form(
     "rootPath" -> nonEmptyText
   )
@@ -20,7 +22,7 @@ object Dashboard extends Controller with Secured {
   )
 
   def dashboard = IsAuthenticatedAsync { user => _ =>
-    val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( Application.config("root-folder") ) }
+    val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( rootFolder ) }
     futurFileSystem.map(
       fileSystem => Ok( views.html.index( fileSystem ) )
     )
@@ -31,7 +33,7 @@ object Dashboard extends Controller with Secured {
   }
 
   def download(path: String) = Action {
-    Ok.sendFile( new File( Application.config("root-folder") + "/" + Tools.unFormatFileUrl( path ) ) )
+    Ok.sendFile( new File( rootFolder + "/" + Tools.unFormatFileUrl( path ) ) )
   }
 
   def downloadZip(path: String) = Action {
@@ -40,7 +42,7 @@ object Dashboard extends Controller with Secured {
 
     val formatedPath = Tools.unFormatFolderUrl( path )
     val enumerator = Enumerator.outputStream { os =>
-      val rootPath = Application.config("root-folder") + "/"
+      val rootPath = rootFolder + "/"
       val zip = new ZipOutputStream( os )
       val filelist = Tools.listFiles( rootPath + formatedPath )
       val b = Array.fill[Byte](1024)(0)
