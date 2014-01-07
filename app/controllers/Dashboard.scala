@@ -38,10 +38,11 @@ object Dashboard extends Controller with Secured {
     import play.api.libs.iteratee._
     import java.util.zip._
 
+    val formatedPath = Tools.unFormatFolderUrl( path )
     val enumerator = Enumerator.outputStream { os =>
       val rootPath = Application.config("root-folder") + "/"
       val zip = new ZipOutputStream( os )
-      val filelist = Tools.listFiles( rootPath + path )
+      val filelist = Tools.listFiles( rootPath + formatedPath )
       val b = Array.fill[Byte](1024)(0)
 
     /*
@@ -64,7 +65,8 @@ object Dashboard extends Controller with Secured {
 
       zip.close()
     }
-    val contentDisposition = "attachment; filename=" + path + ".zip"
+
+    val contentDisposition = "attachment; filename=" +  formatedPath.substring(formatedPath.lastIndexOf("/") + 1print) + ".zip"
     Ok.chunked(enumerator >>> Enumerator.eof).withHeaders(
       "Content-Type" -> "application/zip",
       "Content-Disposition" -> contentDisposition
