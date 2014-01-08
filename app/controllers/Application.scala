@@ -3,9 +3,8 @@ package controllers
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
-import core.ConfigManager
+import core.{UserManager, ConfigManager}
 import scala.concurrent.Future
-import model.user.UserRepository
 object Application extends Controller {
 
   val config = new ConfigManager
@@ -33,7 +32,7 @@ object Application extends Controller {
         Ok( views.html.login() )
       },
       user => {
-        if ( UserRepository.getUser( user._1, user._2 ) != null )
+        if ( UserManager.getUser( user._1, user._2 ) != null )
           Redirect( "/splash" ).withSession( "user" -> user._1 )
         else {
           Ok( views.html.login() )

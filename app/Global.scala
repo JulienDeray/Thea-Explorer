@@ -1,5 +1,6 @@
 
-import model.user.{UserRepository, User}
+import core.UserManager
+import model.User
 import play.api._
 
 object Global extends GlobalSettings{
@@ -8,6 +9,6 @@ object Global extends GlobalSettings{
     Logger.info("Application has started")
 
     val user : User = new User("root","root")
-    UserRepository.addUser(user)
+    UserManager.addUser(user)
   }
 }

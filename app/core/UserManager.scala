@@ -1,6 +1,8 @@
-package model.user
+package core
 
-object UserRepository {
+import model.User
+
+object UserManager {
 
     private var users : List[User] = Nil
 
