@@ -7,7 +7,9 @@ import play.api.data.Form
 import play.api.data.Forms._
 import scala.concurrent.ExecutionContext
 import ExecutionContext.Implicits.global
-
+import play.api.Play
+import play.api.Play.current
+import model.ServerEntity
 
 object Dashboard extends Controller with Secured {
 
@@ -47,10 +49,6 @@ object Dashboard extends Controller with Secured {
       val filelist = Tools.listFiles( rootPath + formatedPath )
       val b = Array.fill[Byte](1024)(0)
 
-    /*
-    \\ pour Windows
-    télécharger un sous dossier (exemple sur le --- pour les fichiers)
-     */
       for ( filePath <- filelist ) {
         var count: Int = 1
         val in = new FileInputStream( rootPath + Tools.unFormatFileUrl( filePath ) )
@@ -100,5 +98,19 @@ object Dashboard extends Controller with Secured {
 
   def webSocketJS() = Action { implicit request =>
     Ok( views.html.webSocket() )
+  }
+
+  def picViewer(path: String) = Action {
+    val unformatedPath = Tools.unFormatFileUrl( path )
+    Ok( views.html.modalPicViewer( rootFolder + "/" + unformatedPath, path ) )
+  }
+
+  def picGetter(path: String) = Action {
+    val file = new File( "/" + path )
+    val source = scala.io.Source.fromFile(file)(scala.io.Codec.ISO8859)
+    val byteArray = source.map(_.toByte).toArray
+    source.close()
+
+    Ok(byteArray).as("image/jpeg")
   }
 }

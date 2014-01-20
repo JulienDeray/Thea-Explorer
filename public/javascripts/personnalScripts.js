@@ -39,4 +39,18 @@ function open( id ) {
     });
 }
 
+function picViewer( path ) {
+    var picUrl = '/view/picture/' + path;
+
+    $.get( picUrl, function( data ) {
+        if ( $('#picViewing').length == 0 )
+            $('body').append( data );
+        else
+            $('#picViewing').replaceWith( data );
+        $('#picViewing').modal('show');
+    }, 'html');
+
+}
+
+
 

@@ -3,22 +3,27 @@
 # ~~~~
 
 # Home page
-GET         /                         controllers.Application.login
-GET         /splash                   controllers.Dashboard.splash
-GET         /dashboard                controllers.Dashboard.dashboard
-GET         /download/:path           controllers.Dashboard.download(path: String)
-GET         /downloadZip/:path        controllers.Dashboard.downloadZip(path: String)
-GET         /logout        controllers.Application.logout
+GET         /                           controllers.Application.login
+GET         /splash                     controllers.Dashboard.splash
+GET         /dashboard                  controllers.Dashboard.dashboard
 
-POST        /setConf                  controllers.Dashboard.setConf()
-POST 	    /login					  controllers.Application.authentification()
+GET         /download/:path             controllers.Dashboard.download(path: String)
+GET         /downloadZip/:path          controllers.Dashboard.downloadZip(path: String)
+
+GET         /view/picture/:path         controllers.Dashboard.picViewer(path: String)
+GET         /get/picture/:path          controllers.Dashboard.picGetter(path: String)
+
+GET         /logout                     controllers.Application.logout
+
+POST        /setConf                    controllers.Dashboard.setConf()
+POST        /login                      controllers.Application.authentification()
 
 # JS
-GET         /js/interpretedJS         controllers.Dashboard.interpretedJS()
-GET         /js/webSocketJs           controllers.Dashboard.webSocketJS()
+GET         /js/interpretedJS           controllers.Dashboard.interpretedJS()
+GET         /js/webSocketJs             controllers.Dashboard.webSocketJS()
 
 # WebSocket
-GET         /sse                      controllers.Pusher.sse()
+GET         /sse                        controllers.Pusher.sse()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.at(path="/public", file)
+GET         /assets/*file               controllers.Assets.at(path="/public", file)

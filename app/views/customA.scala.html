@@ -1,0 +1,19 @@
+@(entity: model.ServerEntity)
+
+@entity.fileType match {
+    case "folder" => {
+        <a onclick="openClose('tr-@entity.hashCode()')">
+            <i class="glyphicon glyphicon-folder-close"></i> @entity.name
+        </a>
+    }
+    case "image" => {
+        <a onclick="picViewer('@entity.path')">
+            <i class="glyphicon glyphicon-picture"></i> @entity.name
+        </a>
+    }
+    case _ => {
+        <a>
+            <i class="glyphicon glyphicon-file"></i> @entity.name
+        </a>
+    }
+}

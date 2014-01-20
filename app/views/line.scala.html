@@ -6,9 +6,7 @@
 >
     <td>
         <div style="margin-left: @{depth * 17}px;">
-            <a @if( entity.isInstanceOf[model.ServerFolder] ) {onclick="openClose('tr-@entity.hashCode()')"}>
-                <i class="glyphicon @entity.icon"></i> @entity.name
-            </a>
+            @views.html.customA( entity )
         </div>
     </td>
     <td><a class="glyphicon glyphicon-cloud-download" href="@if( entity.isInstanceOf[model.ServerFolder] ) {downloadZip@entity.path} else {download/@entity.path}"></a></td>
