@@ -50,15 +50,15 @@ object Dashboard extends Controller with Secured {
       val b = Array.fill[Byte](1024)(0)
 
       for ( filePath <- filelist ) {
-        var count: Int = 1
+        var count: Int = 0
         val in = new FileInputStream( rootPath + Tools.unFormatFileUrl( filePath ) )
 
         zip.putNextEntry( new ZipEntry( Tools.unFormatFileUrl( filePath ) ) )
 
-        while ( count > 0 ) {
+        do {
           zip.write(b, 0, count)
-          count = in.read(b)
-        }
+          count = in.read(b, 0, 1024)
+        } while ( count > 0 )
 
         zip.closeEntry()
       }
