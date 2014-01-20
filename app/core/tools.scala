@@ -13,7 +13,9 @@ object Tools {
     for ( f <- buildFileSystem( path ).content ) {
       list = f match {
         case f: ServerFile => f.path :: list
-        case f: ServerFolder => list ++ listFiles( Dashboard.rootFolder + f.path )
+        case f: ServerFolder => {
+          list ++ listFiles( Dashboard.rootFolder + unFormatFolderUrl( f.path ) )
+        }
       }
     }
     list
