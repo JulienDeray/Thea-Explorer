@@ -7,8 +7,8 @@ GET         /                           controllers.Application.login
 GET         /splash                     controllers.Dashboard.splash
 GET         /dashboard                  controllers.Dashboard.dashboard
 
-GET         /download/:path             controllers.Dashboard.download(path: String)
-GET         /downloadZip/:path          controllers.Dashboard.downloadZip(path: String)
+GET         /download/file/:path        controllers.Dashboard.download(path: String)
+GET         /download/zip/:path         controllers.Dashboard.downloadZip(path: String)
 
 GET         /view/picture/:path         controllers.Dashboard.picViewer(path: String)
 GET         /get/picture/:path          controllers.Dashboard.picGetter(path: String)

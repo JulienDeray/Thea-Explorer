@@ -9,7 +9,7 @@
             @views.html.customA( entity )
         </div>
     </td>
-    <td><a class="glyphicon glyphicon-cloud-download" href="@if( entity.isInstanceOf[model.ServerFolder] ) {downloadZip@entity.path} else {download/@entity.path}"></a></td>
+    <td><a class="glyphicon glyphicon-cloud-download" href="@if( entity.isInstanceOf[model.ServerFolder] ) {download/zip@entity.path} else {download/file/@entity.path}"></a></td>
     <td class="file-size">@entity.formatedSize._1</td>
     <td>@entity.formatedSize._2</td>
 </tr>
