@@ -5,8 +5,11 @@ import java.io.{FileOutputStream, File}
 import controllers.{Dashboard, Pusher}
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import play.api.data
+import java.util.regex.Matcher
 
 object Tools {
+
+  val pathSeparator = Matcher.quoteReplacement(File.separator)
 
   def listFiles(path: String): List[String] = {
     var list: List[String] = Nil
@@ -57,9 +60,9 @@ object Tools {
     new ServerFolder( path.getName, content.reverse, formatFolderUrl( root.substring(Dashboard.rootFolder.size) ) )
   }
 
-  def formatFileUrl(path: String): String = path.substring(Dashboard.rootFolder.size + 1).replaceAll("/", "---")
-  def unFormatFileUrl(path: String): String = path.replaceAll("---", "/").replaceAll("%20", "\\ ")
+  def formatFileUrl(path: String): String = path.substring(Dashboard.rootFolder.size + 1).replaceAll(pathSeparator, "---")
+  def unFormatFileUrl(path: String): String = path.replaceAll("---", pathSeparator).replaceAll("%20", "\\ ")
 
-  def formatFolderUrl(path: String): String = "/" + path.substring(1).replaceAll("/", "---")
-  def unFormatFolderUrl(path: String): String = "/" + path.replaceAll("---", "/")
+  def formatFolderUrl(path: String): String = "/" + path.substring(1).replaceAll(pathSeparator, "---")
+  def unFormatFolderUrl(path: String): String = "/" + path.replaceAll("---", pathSeparator)
 }
