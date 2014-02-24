@@ -1,0 +1,5 @@
+@(entities: List[model.ServerEntity], depth: Int = 0, parentId: Int = 0)
+
+@for(file <- entities) {
+    @views.html.line( file )( depth )( parentId )
+}

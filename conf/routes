@@ -13,9 +13,12 @@ GET         /download/zip/:path         controllers.Dashboard.downloadZip(path: 
 GET         /view/picture/:path         controllers.Dashboard.picViewer(path: String)
 GET         /get/picture/:path          controllers.Dashboard.picGetter(path: String)
 
+GET         /getPage/:noPage            controllers.Dashboard.getPage(noPage: String)
+
 GET         /logout                     controllers.Application.logout
 
 POST        /setConf                    controllers.Dashboard.setConf()
+POST        /getNextPageNo              controllers.Dashboard.getNextPageNo()
 POST        /login                      controllers.Application.authentification()
 
 # JS

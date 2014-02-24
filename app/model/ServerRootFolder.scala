@@ -8,13 +8,14 @@ class ServerRootFolder( override val name: String, override val content: List[Se
     var tempContent = List[ServerEntity]()
     content.map { entity =>
       if ( i % 30 == 0 && i != 0 ) {
-        res = tempContent :: res
+        res = tempContent.reverse :: res
         tempContent = List[ServerEntity]()
       }
 
       tempContent = entity :: tempContent
       i += 1
     }
+    res = tempContent.reverse :: res
     res.reverse
   }
 }

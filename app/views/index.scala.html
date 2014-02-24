@@ -15,9 +15,7 @@
                         </tr>
                     </thead>
 
-                    @for(file <- files.pagedContent(0)) {
-                        @views.html.line( file )( 0 )( 0 )
-                    }
+                    @views.html.lines( files.pagedContent(0) )
 
                 </table>
             </div>

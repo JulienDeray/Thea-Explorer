@@ -24,4 +24,8 @@ object Pusher extends Controller {
   def pushProgressBar(pourcentage: String) {
     channel push "{ \"command\" : \"refreshProgressBar\", \"pourcentage\" : \"" + pourcentage + "\" }"
   }
+
+  def pushPageNumber(noPage : Int) {
+    channel push "{ \"command\" : \"nextPage\", \"noPage\" : \"" + noPage + "\" }"
+  }
 }

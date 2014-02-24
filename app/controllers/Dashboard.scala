@@ -9,7 +9,9 @@ import scala.concurrent.ExecutionContext
 import ExecutionContext.Implicits.global
 import play.api.Play
 import play.api.Play.current
-import model.ServerEntity
+import model.{ServerRootFolder, ServerEntity}
+import scala.concurrent.duration.Duration
+import java.util.concurrent.TimeUnit
 
 object Dashboard extends Controller with Secured {
 
@@ -23,13 +25,19 @@ object Dashboard extends Controller with Secured {
     "status" -> nonEmptyText
   )
 
+  val nextPageForm = Form(
+    "noPage" -> nonEmptyText
+  )
+
+  lazy val rootEntity: ServerRootFolder = {
+    val rootFile = new File( rootFolder )
+    Tools.startBuildFileSystem( rootFile )
+  }
+
   def dashboard = IsAuthenticatedAsync { user => _ =>
     val rootFile = new File( rootFolder )
     if ( rootFile.exists() ) {
-      val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( rootFile ) }
-      futurFileSystem.map(
-        fileSystem => Ok( views.html.index( fileSystem ) )
-      )
+      scala.concurrent.Future { Ok( views.html.index( rootEntity ) ) }
     }
     else {
       scala.concurrent.Future { Ok( views.html.pathError() ) }
@@ -91,10 +99,10 @@ object Dashboard extends Controller with Secured {
 
   def launchInit() = Action { implicit request =>
     launchInitForm.bindFromRequest().fold(
-    formWithErrors => BadRequest( "Serious issue !" ),
-    { status =>
-      Ok
-    }
+      formWithErrors => BadRequest( "Serious issue !" ),
+      { status =>
+        Ok
+      }
     )
   }
 
@@ -118,5 +126,20 @@ object Dashboard extends Controller with Secured {
     source.close()
 
     Ok(byteArray).as("image/jpeg")
+  }
+
+  def getNextPageNo() = Action { implicit request =>
+    nextPageForm.bindFromRequest().fold(
+      formWithErrors => BadRequest( "Serious issue !" ),
+      { noPage => {
+          Pusher.pushPageNumber( noPage.toInt )
+          Ok
+        }
+      }
+    )
+  }
+
+  def getPage(noPage: String) = Action {
+    Ok( views.html.lines( rootEntity.pagedContent( noPage.toInt ) ) )
   }
 }

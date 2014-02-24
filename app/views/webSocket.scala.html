@@ -18,10 +18,19 @@ function openSSEConnection() {
         var data = JSON.parse( event.data )
         console.log( "Update id: " + data.id + " => " + data.command)
 
-        if (data.command == "refreshProgressBar") {
-            $('#splashProgressBar').attr('aria-valuenow', data.pourcentage);
-            $('#splashProgressBar').attr('style', "width: " + data.pourcentage + "%");
-            $('#pourcentage').html(data.pourcentage)
+        switch( data.command ) {
+            case "refreshProgressBar":
+                $('#splashProgressBar').attr('aria-valuenow', data.pourcentage);
+                $('#splashProgressBar').attr('style', "width: " + data.pourcentage + "%");
+                $('#pourcentage').html(data.pourcentage);
+                break;
+
+            case "nextPage":
+                var page = data.noPage;
+                $.get( '/getPage/' + page, function( html ) {
+                    $('#loadergif').remove();
+                    $('tbody').append( html );
+                }, 'html');
         }
     }
 }
