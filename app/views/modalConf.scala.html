@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="confModalLabel">Configuration</h4>
             </div>
             <div class="modal-body">
-                <form action="@{routes.Dashboard.setConf()}" method="post" role="form" class="form-horizontal">
+                <div class="form-horizontal">
                     <div class="form-group">
                         <label for="rootPath" class="col-sm-3 control-label">Root path :</label>
                         <div class="col-sm-9">
@@ -22,7 +22,7 @@
                             <span class="help-block">Be carefull, the application will get all files until the last leaf. A folder to high in the hierarchy will probably make it crash (see "Known issues" section on our GitHub.)</span>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
