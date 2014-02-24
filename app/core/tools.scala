@@ -28,8 +28,8 @@ object Tools {
     Pusher.pushProgressBar( ((i*100) / total).toInt + "%")
   }
 
-  def startBuildFileSystem(root: String): ServerFolder = {
-    val path = new File(root)
+  def startBuildFileSystem(path: File): ServerFolder = {
+    val root = path.getAbsolutePath
     var content = List[ServerEntity]()
     val contentSize = path.listFiles().size
     var i: Double = 0

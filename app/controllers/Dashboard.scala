@@ -24,10 +24,16 @@ object Dashboard extends Controller with Secured {
   )
 
   def dashboard = IsAuthenticatedAsync { user => _ =>
-    val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( rootFolder ) }
-    futurFileSystem.map(
-      fileSystem => Ok( views.html.index( fileSystem ) )
-    )
+    val rootFile = new File( rootFolder )
+    if ( rootFile.exists() ) {
+      val futurFileSystem = scala.concurrent.Future { Tools.startBuildFileSystem( rootFile ) }
+      futurFileSystem.map(
+        fileSystem => Ok( views.html.index( fileSystem ) )
+      )
+    }
+    else {
+      scala.concurrent.Future { Ok( views.html.pathError() ) }
+    }
   }
 
   def splash = IsAuthenticated { user => _ =>
