@@ -1,4 +1,4 @@
-@(files: model.ServerFolder)
+@(files: model.ServerRootFolder)
 
 @main("Thea Explorer") {
 
@@ -15,7 +15,7 @@
                         </tr>
                     </thead>
 
-                    @for(file <- files.content) {
+                    @for(file <- files.pagedContent(0)) {
                         @views.html.line( file )( 0 )( 0 )
                     }
 

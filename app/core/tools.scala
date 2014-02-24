@@ -1,6 +1,6 @@
 package core
 
-import model.{ServerFile, ServerEntity, ServerFolder}
+import model.{ServerRootFolder, ServerFile, ServerEntity, ServerFolder}
 import java.io.{FileOutputStream, File}
 import controllers.{Dashboard, Pusher}
 import java.util.zip.{ZipEntry, ZipOutputStream}
@@ -28,7 +28,7 @@ object Tools {
     Pusher.pushProgressBar( ((i*100) / total).toInt + "%")
   }
 
-  def startBuildFileSystem(path: File): ServerFolder = {
+  def startBuildFileSystem(path: File): ServerRootFolder = {
     val root = path.getAbsolutePath
     var content = List[ServerEntity]()
     val contentSize = path.listFiles().size
@@ -43,7 +43,7 @@ object Tools {
       refreshCounter(i, contentSize)
     }
 
-    new ServerFolder( path.getName, content.reverse, root )
+    new ServerRootFolder( path.getName, content.reverse, root )
   }
 
   def buildFileSystem(root: String): ServerFolder = {
