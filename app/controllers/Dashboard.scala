@@ -89,11 +89,11 @@ object Dashboard extends Controller with Secured {
 
   def setConf() = Action { implicit request =>
     confForm.bindFromRequest().fold(
-    formWithErrors => BadRequest( "You have to post a 'root' value" ),
-    { root =>
-      Application.config.saveProperties( Application.config.addProperty("root-folder", root) )
-      Ok
-    }
+      formWithErrors => BadRequest( "You have to post a 'root' value" ),
+      { root =>
+        Application.config.saveProperties( Application.config.addProperty("root-folder", root) )
+        Ok
+      }
     )
   }
 
