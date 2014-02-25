@@ -31,6 +31,17 @@ function openSSEConnection() {
                     $('#loadergif').remove();
                     $('tbody').append( html );
                 }, 'html');
+                break;
+
+            case "newSong":
+                var songPath = data.songPath;
+                $('#audioPlayer').children().get(0).remove()
+
+                $.get( '/audioPlayer/' + songPath, function( data ) {
+                    $('#audioPlayer').append( data );
+                }, 'html');
+
+                setTimeout("$('#audioPlayer').children().get(0).play()", 3000);
         }
     }
 }

@@ -14,12 +14,16 @@ GET         /view/picture/:path         controllers.Dashboard.picViewer(path: St
 GET         /get/picture/:path          controllers.Dashboard.picGetter(path: String)
 
 GET         /getPage/:noPage            controllers.Dashboard.getPage(noPage: String)
+POST        /getNextPageNo              controllers.Dashboard.getNextPageNo()
+
+GET         /audioStream/:path          controllers.Dashboard.audioStream(path: String)
+GET         /audioPlayer/:path          controllers.Dashboard.audioPlayer(path: String)
+POST        /launchSong                 controllers.Dashboard.launchSong()
 
 GET         /logout                     controllers.Application.logout
+POST        /login                      controllers.Application.authentification()
 
 POST        /setConf                    controllers.Dashboard.setConf()
-POST        /getNextPageNo              controllers.Dashboard.getNextPageNo()
-POST        /login                      controllers.Application.authentification()
 
 # JS
 GET         /js/interpretedJS           controllers.Dashboard.interpretedJS()

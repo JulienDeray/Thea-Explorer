@@ -49,7 +49,11 @@ function picViewer( path ) {
             $('#picViewing').replaceWith( data );
         $('#picViewing').modal('show');
     }, 'html');
+}
 
+function musicPlayer( path ) {
+    var url = '/launchSong';
+    $.post(url, { songPath: path });
 }
 
 
