@@ -29,6 +29,10 @@ object Dashboard extends Controller with Secured {
     "noPage" -> nonEmptyText
   )
 
+  val launchSongForm = Form(
+    "songPath" -> nonEmptyText
+  )
+
   lazy val rootEntity: ServerRootFolder = {
     val rootFile = new File( rootFolder )
     Tools.startBuildFileSystem( rootFile )
@@ -120,12 +124,37 @@ object Dashboard extends Controller with Secured {
   }
 
   def picGetter(path: String) = Action {
+    println( path )
     val file = new File( "/" + path )
     val source = scala.io.Source.fromFile(file)(scala.io.Codec.ISO8859)
     val byteArray = source.map(_.toByte).toArray
     source.close()
 
     Ok(byteArray).as("image/jpeg")
+  }
+
+  def audioStream(path: String) = Action {
+    val file = new File( rootFolder + "/" + Tools.unFormatFileUrl( path ) )
+    val source = scala.io.Source.fromFile(file)(scala.io.Codec.ISO8859)
+    val byteArray = source.map(_.toByte).toArray
+    source.close()
+
+    Ok(byteArray).as("audio/mpeg")
+  }
+
+  def launchSong() = Action { implicit request =>
+    launchSongForm.bindFromRequest().fold(
+    formWithErrors => BadRequest( "Serious issue !" ),
+      { songPath => {
+          Pusher.pushNewSong( songPath )
+          Ok
+        }
+      }
+    )
+  }
+
+  def audioPlayer(path: String) = Action {
+    Ok( views.html.audioPlayer( "/audioStream/" + path ) )
   }
 
   def getNextPageNo() = Action { implicit request =>

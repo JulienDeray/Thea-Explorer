@@ -7,6 +7,7 @@ import ExecutionContext.Implicits.global
 
 object Pusher extends Controller {
 
+
   //Concurernt.broadcast returns (Enumerator, Concurrent.Channel)
   val (out,channel) = Concurrent.broadcast[String]
 
@@ -27,5 +28,9 @@ object Pusher extends Controller {
 
   def pushPageNumber(noPage : Int) {
     channel push "{ \"command\" : \"nextPage\", \"noPage\" : \"" + noPage + "\" }"
+  }
+
+  def pushNewSong(songPath: String) {
+    channel push "{ \"command\" : \"newSong\", \"songPath\" : \"" + songPath + "\" }"
   }
 }

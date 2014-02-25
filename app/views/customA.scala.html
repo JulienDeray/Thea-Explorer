@@ -11,6 +11,11 @@
             <i class="glyphicon glyphicon-picture"></i> @entity.name
         </a>
     }
+   case "music" => {
+       <a onclick="musicPlayer('@entity.path')">
+           <i class="glyphicon glyphicon-music"></i> @entity.name
+       </a>
+   }
     case _ => {
         <a>
             <i class="glyphicon glyphicon-file"></i> @entity.name
