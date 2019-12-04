@@ -41,6 +41,9 @@ object Application extends Controller {
     )
   }
 
+  def hello = Action {
+    Ok("Hello World!")
+  }
 }
 
 
